@@ -37,7 +37,7 @@ const UsersController = {
         });
       }
     } catch (error) {
-      return res.status(404).json({ msg: error.message });
+      return res.status(400).json({ msg: error.message });
     }
   },
 
@@ -65,8 +65,8 @@ const UsersController = {
       );
       if (!verifyPassword) {
         return res
-          .status(404)
-          .json({ status: 404, message: `Login failed, wrong password` });
+          .status(401)
+          .json({ status: 401, message: `Login failed, wrong password` });
       }
       let data = users;
       delete data.password;

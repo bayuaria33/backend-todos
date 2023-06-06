@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan") //logger
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -7,6 +8,7 @@ const xss = require("xss-clean");
 const app = express();
 const port = 4000;
 const mainRoute = require(`./src/routes/index`);
+app.use(morgan(':method :url :date[web] :status'))
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -31,5 +33,5 @@ app.use("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
+  console.info(`App running on port ${port}.`);
 });
