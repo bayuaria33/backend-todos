@@ -29,6 +29,20 @@ const updateTodo = (data) => {
   );
 };
 
+const setCompleted = (data) => {
+  const {id, user_id} = data;
+  const query = `UPDATE todos SET completed = true WHERE id='${id}' AND user_id = '${user_id}'`;
+  return new Promise((resolve, reject) =>
+    Pool.query(query, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
 const deleteTodo = (data) => {
   const { id, user_id } = data;
   const query = `DELETE FROM todos WHERE id = '${id}' AND user_id = '${user_id}'`;
@@ -75,4 +89,5 @@ module.exports = {
   findTodo,
   updateTodo,
   deleteTodo,
+  setCompleted
 };

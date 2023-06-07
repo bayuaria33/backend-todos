@@ -4,6 +4,7 @@ const {
   updateTodo,
   findTodo,
   deleteTodo,
+  setCompleted
 } = require("../model/todosModel");
 
 const TodosController = {
@@ -39,12 +40,12 @@ const TodosController = {
       if (result.rows.length === 0) {
         return res
           .status(400)
-          .json({ msg: `Failed getting porto of user ${user_id}` });
+          .json({ msg: `Failed getting todo of user ${user_id}` });
       }
       return res
         .status(200)
         .json({
-          msg: `Success get porto of user ${user_id}`,
+          msg: `Success get todo of user ${user_id}`,
           data: result.rows,
         });
     } catch (error) {
@@ -72,6 +73,26 @@ const TodosController = {
       return res
         .status(201)
         .json({ msg: "updated todos successfully", data: data });
+    } catch (error) {
+      return res.status(400).json({ msg: error.message });
+    }
+  },
+
+  setCompleted: async (req, res, next) => {
+    try {
+      let id = req.params.id;
+      let user_id = req.payload.id;
+      let data = {
+        id,
+        user_id,
+      };
+      const result = await setCompleted(data);
+      if (!result) {
+        return res.status(401).json({ msg: "Failed update todo status" });
+      }
+      return res
+        .status(201)
+        .json({ msg: "updated todo status successfully", data: data });
     } catch (error) {
       return res.status(400).json({ msg: error.message });
     }
