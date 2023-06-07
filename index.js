@@ -6,7 +6,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 3000;
 const mainRoute = require(`./src/routes/index`);
 app.use(morgan(':method :url :date[web] :status'))
 app.use(function(req, res, next) {
