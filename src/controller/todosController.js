@@ -39,8 +39,8 @@ const TodosController = {
       const result = await findUserTodo(user_id);
       if (result.rows.length === 0) {
         return res
-          .status(400)
-          .json({ msg: `Failed getting todo of user ${user_id}` });
+          .status(404)
+          .json({ msg: `No data found for user ${user_id}` });
       }
       return res
         .status(200)
