@@ -53,6 +53,26 @@ const TodosController = {
     }
   },
 
+  getTodoById: async (req, res, next) => {
+    try {
+      let id = req.params.id;
+      const result = await findTodo(id);
+      if (result.rows.length === 0) {
+        return res
+          .status(400)
+          .json({ msg: `Failed getting todo of id ${id}` });
+      }
+      return res
+        .status(200)
+        .json({
+          msg: `Success get todo of id ${id}`,
+          data: result.rows,
+        });
+    } catch (error) {
+      return res.status(400).json({ msg: error.message });
+    }
+  },
+
   updateTodo: async (req, res, next) => {
     try {
       let id = req.params.id;

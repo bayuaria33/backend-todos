@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   insertTodo,
   getTodo,
+  getTodoById,
   updateTodo,
   deleteTodo,
   setCompleted
@@ -10,6 +11,7 @@ const {
 const { protect } = require("../middleware/auth");
 
 router.get("/my-todo", protect, getTodo);
+router.get("/:id", getTodoById);
 router.post("/add/", protect, insertTodo);
 router.put("/complete/:id", protect, setCompleted)
 router.put("/:id", protect, updateTodo);
